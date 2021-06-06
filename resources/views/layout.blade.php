@@ -12,7 +12,7 @@
   
 
 
-    <title>Stand CSS Blog by TemplateMo</title>
+    <title>HappyPets</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
