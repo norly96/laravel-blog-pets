@@ -136,20 +136,21 @@
           <div class="col-lg-8">
             <div class="all-blog-posts">
               <div class="row">
+              @foreach($posts as $post)
                 <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
                       <img src="{{asset('images/blog-post-01.jpg')}}" alt="">
                     </div>
                     <div class="down-content">
-                      <span>Lifestyle</span>
-                      <a href="post-details.html"><h4>Best Template Website for HTML CSS</h4></a>
+                      <span>{{$post->title}}</span>
+                      <a href="post-details.html"><h4>{{$post->mediumtext}}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 31, 2020</a></li>
-                        <li><a href="#">12 Comments</a></li>
+                        <li><a href="#">{{$post->published_at->diffForHumans()}}</a></li>
+                        <li><a href="#">{{$post->category->name}}</a></li>
                       </ul>
-                      <p>Stand Blog is a free HTML CSS template for your CMS theme. You can easily adapt or customize it for any kind of CMS or website builder. You are allowed to use it for your business. You are NOT allowed to re-distribute the template ZIP file on any template collection site for the download purpose. <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">Contact TemplateMo</a> for more info. Thank you.</p>
+                      <p>{{$post->body}}</p>
                       <div class="post-options">
                         <div class="row">
                           <div class="col-6">
@@ -171,7 +172,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-12">
+                @endforeach
+                {{-- <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
                       <img src="{{asset('images/blog-post-02.jpg')}}" alt="">
@@ -240,7 +242,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> --}}
                 <div class="col-lg-12">
                   <div class="main-button">
                     <a href="blog.html">View All Posts</a>
