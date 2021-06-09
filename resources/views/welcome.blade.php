@@ -147,8 +147,11 @@
                       <a href="post-details.html"><h4>{{$post->mediumtext}}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">Admin</a></li>
-                        <li><a href="#">{{$post->published_at->diffForHumans()}}</a></li>
+                        <li><a href="#">{{$post->published_at->format('M d Y')}}</a></li>
                         <li><a href="#">{{$post->category->name}}</a></li>
+                        @foreach($post->tags as $tag)
+                        <li><a href="#">#{{$tag->name}}</a></li>
+                        @endforeach
                       </ul>
                       <p>{{$post->body}}</p>
                       <div class="post-options">
@@ -291,7 +294,7 @@
                     </div>
                     <div class="content">
                       <ul>
-                        <li><a href="#">- Nature Lifestyle</a></li>
+                        <li><a href="#">-  Lifestyle</a></li>
                         <li><a href="#">- Awesome Layouts</a></li>
                         <li><a href="#">- Creative Ideas</a></li>
                         <li><a href="#">- Responsive Templates</a></li>
