@@ -13,11 +13,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $posts = App\Models\Post::latest('published_at')->get();
-    return view('welcome', compact('posts'));
+Route::get('/', [App\Http\Controllers\PagesController::class, 'home']);
+
+/* Route::get('posts', function(){
+      return App\Models\Post::all();  //muestra todos los posts------es una prueba
+}); */
+
+Route::get('home', [App\Http\Controllers\HomeController::class, 'index']);
+
+
+Route::group(['prefix'=>'admin','middleware'=>'auth'], function(){  // Grupo de Rutas---- Todas las rutas de este grupo van a estar precedidas por admin -->prefix es decir admin\posts
+
+    Route::get('posts', [App\Http\Controllers\Admin\PostsController::class, 'index'])->name('admin.posts.index');
 });
 
-Route::get('posts', function(){
-      return App\Models\Post::all();
-});
+
+
+Auth::routes();
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+/* Route::get('home', [App\Http\Controllers\HomeController::class, 'index']);
+
+es lo mismo que 
+
+Route::get('home','HomeController@index'); ---->>>> Aqui esta buscando el HomeController en App/ 
+Route::get('home','App\HomeController@index');
+*/
+
+
+
+
+
