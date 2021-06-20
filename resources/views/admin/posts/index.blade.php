@@ -35,6 +35,8 @@
                   <tr>
                     <th>ID</th>
                     <th>Titulo</th>
+                    <th>Extracto</th>
+                    <th>Acciones</th>
                     
                   </tr>
                   </thead>
@@ -43,6 +45,11 @@
                   <tr>
                        <td>{{$post->id}}</td>
                        <td>{{$post->title}}</td>
+                       <td>{{$post->mediumtext}}</td>
+                       <td>
+                       <a href="#" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                       <a href="#" class="btn btn-danger"><i class="fa fa-times-circle"></i></a>
+                       </td>
                   </tr>
                       
                   @endforeach

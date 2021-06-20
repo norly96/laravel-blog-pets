@@ -20,6 +20,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href={{asset("adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css")}}>
   <link rel="stylesheet" href={{asset("adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css")}}>
 
+  @stack('styles')
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -262,6 +264,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src={{asset("adminlte/plugins/datatables-buttons/js/buttons.html5.min.js")}}></script>
 <script src={{asset("adminlte/plugins/datatables-buttons/js/buttons.print.min.js")}}></script>
 <script src={{asset("adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js")}}></script>
+
+@stack('scripts')
 
 <!-- Page specific script -->
 <script>

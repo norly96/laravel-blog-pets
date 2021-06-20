@@ -5,8 +5,8 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li   class="nav-item">
+            <a href="{{route('dashboard')}}" class="nav-link {{ request()->is('admin') ?  'active' : ''}} ">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Inicio
@@ -15,8 +15,8 @@
             </a>
           </li>
 
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link ">
+          <li class="nav-item {{ request()->is('admin/posts*') ?  'menu-open' : ''}} ">
+            <a href="#" class="nav-link {{ request()->is('admin/posts*') ?  'active' : ''}}">
               <i class="nav-icon fas fa-bars"></i>
               <p>
                 Blogs
@@ -25,13 +25,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href={{route('admin.posts.index')}} class="nav-link ">
+                <a href={{route('admin.posts.index')}} class="nav-link {{ request()->is('admin/posts') ?  'active' : ''}} ">
                   <i class="far fa-eye nav-icon"></i>
                   <p>Ver todos los Post</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('admin.posts.create')}}" class="nav-link {{ request()->is('admin/posts/create') ?  'active' : ''}}">
                   <i class="far fa-edit nav-icon"></i>
                   <p>Crear un Post</p>
                 </a>
