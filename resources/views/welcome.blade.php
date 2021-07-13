@@ -107,7 +107,7 @@
     </div>
     <!-- Banner Ends Here -->
 
-    <section class="call-to-action">
+    {{-- <section class="call-to-action">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -127,7 +127,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> --}}
 
 
     <section class="blog-posts">
@@ -140,7 +140,11 @@
                 <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
-                      <img src="{{asset('images/blog-post-01.jpg')}}" alt="">
+                    @if ($post->photos->count()==1)
+                      <img src="{{$post->photos->first()->url}}" alt="">
+                      @elseif($post->photos->count()>1)
+                      <img src="{{$post->photos->first()->url}}" alt="">
+                    @endif  
                     </div>
                     <div class="down-content">
                       <span>{{$post->title}}</span>
@@ -153,23 +157,17 @@
                         <li><a href="#">#{{$tag->name}}</a></li>
                         @endforeach
                       </ul>
-                      <p>{{$post->body}}</p>
+                      <br/>
+                      {{-- <p>{{$post->body}}</p> --}}
                       <div class="post-options">
                         <div class="row">
                           <div class="col-6">
                             <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Beauty</a>,</li>
-                              <li><a href="#">Nature</a></li>
+                              
+                             <li><a href="blog/{{$post->url}}">Leer mas</a></li>
                             </ul>
                           </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#"> Twitter</a></li>
-                            </ul>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>

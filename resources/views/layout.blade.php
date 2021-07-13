@@ -1,18 +1,18 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
   <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="@yield('meta-description' , 'Este es un blog de HappyPets')">
     <meta name="author" content="TemplateMo">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
   
 
 
-    <title>HappyPets</title>
+    <title>@yield('meta-title', config('app.name') . " | Blog")</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{asset('css/fontawesome.css')}}">
     <link rel="stylesheet" href="{{asset('css/templatemo-stand-blog.css')}}">
     <link rel="stylesheet" href="{{asset('css/owl.css')}}">
+
+
 <!--
 
 TemplateMo 551 Stand Blog
@@ -29,18 +31,17 @@ TemplateMo 551 Stand Blog
 https://templatemo.com/tm-551-stand-blog
 
 -->
+
   </head>
-
   <body>
-
     <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
+    {{-- <div id="preloader">
         <div class="jumper">
             <div></div>
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>   --}}
     <!-- ***** Preloader End ***** -->
 
     <!-- Header -->
@@ -54,7 +55,7 @@ https://templatemo.com/tm-551-stand-blog
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
+                <a class="nav-link" href="/">Home
                   <span class="sr-only">(current)</span>
                 </a>
               </li> 
@@ -75,7 +76,6 @@ https://templatemo.com/tm-551-stand-blog
         </div>
       </nav>
     </header>
-
 
 
   @yield('content')
@@ -116,7 +116,7 @@ https://templatemo.com/tm-551-stand-blog
     <script src="{{asset('js/slick.js')}}"></script>
     <script src="{{asset('js/isotope.js')}}"></script>
     <script src="{{asset('js/accordions.js')}}"></script>
-
+    
     <script language = "text/Javascript"> 
       cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
       function clearField(t){                   //declaring the array outside of the
@@ -127,8 +127,8 @@ https://templatemo.com/tm-551-stand-blog
           }
       }
     </script>
-  </body>
-   
+ 
+   </body>
 </html>
 
 

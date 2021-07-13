@@ -215,7 +215,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Main content -->
     <div class="content">
-      
+      @if(session()->has('flash'))
+      <div class="alert alert-success">{{session('flash')}}</div>
+      @endif
        @yield('content')
 
   </div>
@@ -267,6 +269,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 @stack('scripts')
 
+
+
 <!-- Page specific script -->
 <script>
   $(function () {
@@ -285,5 +289,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     }).buttons().container().appendTo('#posts-table_wrapper .col-md-6:eq(0)');
   });
 </script>
+
+@include('admin.posts.create')
 </body>
 </html>
