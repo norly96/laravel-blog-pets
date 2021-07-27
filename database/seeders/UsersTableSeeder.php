@@ -22,5 +22,11 @@ class UsersTableSeeder extends Seeder
         $user->password = bcrypt('123456');
         $user->save();
 
+        $user = new User;
+        $user->name = 'Prueba';
+        $user->email = 'p@p.com';
+        $user->password = bcrypt('123456');
+        $user->save();
+
     }
 }

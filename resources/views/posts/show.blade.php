@@ -41,7 +41,7 @@
                       <span>{{$post->title}}</span>
                       <a href="post-details.html"><h4>{{$post->mediumtext}}</h4></a>
                       <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
+                        <li><a href="#">{{$post->owner->name}}</a></li>
                         <li><a href="#">{{$post->published_at->format('M d Y')}}</a></li>
                         <li><a href="#">{{$post->category->name}}</a></li>
                         @foreach($post->tags as $tag)

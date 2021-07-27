@@ -14,7 +14,7 @@
       <div class="modal-body">
         <div class="form-group">
                                <label @error('title') style="color:red" @enderror>Titulo de la publicacion</label>
-                               <input name="title" value="{{old('title')}}" placeholder="Ingresa el titulo de la publicacion" class="form-control @error('title') is-invalid @enderror">
+                               <input name="title" value="{{old('title')}}" placeholder="Ingresa el titulo de la publicacion" required class="form-control @error('title') is-invalid @enderror">
                                @error('title')
                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -25,7 +25,7 @@
                              </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <button class="btn btn-primary">Crear publicacion</button>
       </div>
     </div>

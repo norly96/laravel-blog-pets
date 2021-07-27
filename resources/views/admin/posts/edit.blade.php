@@ -22,6 +22,7 @@
 @stop
 
  @section('content')
+ 
  <form method="POST" action="{{route('admin.posts.update', $post)}}">
     {{csrf_field()}} {{method_field('PUT')}}
              <div class="row">
@@ -54,14 +55,7 @@
                                     </span>
                                @enderror
                              </div>
-                             <div class="row">
-                                 @foreach($post->photos as $photo)
-                                 <div class="col-md-2">
-                                 <button class="btn btn-danger btn-xs " style="position: absolute">X</button>
-                                     <img class="img-responsive"  width="300px" src="{{url($photo->url)}}">
-                                 </div>
-                                 @endforeach
-                             </div>
+                             
 
                           </div>
                           
@@ -82,24 +76,30 @@
                                @enderror
                              </div>
                         <div class="form-group">
-                               <label>Fecha de publicacion:</label>
+                               <label @error('published_at') style="color:red" @enderror>Fecha de publicacion:</label>
                              <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                             <input name="published_at" value="{{old('published_at', $post->published_at ? $post->published_at->format('M d Y') : null)}}" type="text" class="form-control datetimepicker-input @error('published_at') is-invalid @enderror" data-target="#reservationdate"/>
+                             {{-- <input name="published_at" value="{{old('published_at', $post->published_at ? $post->published_at->format('m/d/Y') : null)}}" type="text" class="form-control datetimepicker-input @error('published_at') is-invalid @enderror" data-target="#reservationdate"/> --}}
+                             <input name="published_at" value="{{old('published_at', $post->published_at ? $post->published_at->format('m/d/Y') : null)}}" type="text" class="form-control datetimepicker-input @error('published_at') is-invalid @enderror" data-target="#reservationdate"/>
                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                            </div>
+                           @error('published_at')
+                               <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                               @enderror
                             </div>
                             
                         </div>
                         <div class="form-group">
-                             <label @error('category') style="color:red" @enderror>Categorias</label>
-                             <select name="category" class="form-control @error('category') is-invalid @enderror">
+                             <label @error('category_id') style="color:red" @enderror>Categorias</label>
+                             <select name="category_id" class="form-control @error('category_id') is-invalid @enderror">
                                 <option value="">Selecciona una categoria</option>
                                 @foreach($categories as $category)
-                                    <option value="{{$category->id}}" {{old('category', $post->category_id) == $category->id ? 'selected' : ''}} >{{$category->name}} </option> {{-- Para que el campo categorias se quede con el valor en caso de error una validacion y se refresquen los datos introducidos --}}
+                                    <option value="{{$category->id}}" {{old('category_id', $post->category_id) == $category->id ? 'selected' : ''}} >{{$category->name}} </option> {{-- Para que el campo categorias se quede con el valor en caso de error una validacion y se refresquen los datos introducidos --}}
                                 @endforeach
                              </select>
-                             @error('category')
+                             @error('category_id')
                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -136,7 +136,31 @@
                  </div>
             
             </div>
-</form>            
+</form>     
+
+@if($post->photos->count())
+ <div class="row">
+    <div class="col-md-8">
+        <div class="card card-primary">
+            <div class="card-body">
+
+                @foreach($post->photos as $photo)
+                <form method="POST" action="{{route('admin.photos.destroy',$photo)}}">
+                    {{method_field('DELETE') }} {{ csrf_field() }}
+                    <div class="col-sm-4">
+                        <button class="btn btn-danger btn-xs " style="position: absolute">X</button>
+                        <img class="img-responsive" width="200px" src="{{url($photo->url)}}">
+                    </div>
+                <form>
+                 @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+
+
 @stop
 
 @push('styles')
@@ -171,11 +195,13 @@
 $(function () {
       // Summernote
     $('#summernote').summernote({
-      height: 315,
+      height: 415,
     })
 
     //Initialize Select2 Elements
-    $('.select2').select2()
+    $('.select2').select2({
+      tags: true
+    })
 
     //Initialize Select2 Elements
     $('.select2bs4').select2({

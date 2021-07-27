@@ -11,7 +11,7 @@ class Post extends Model
 {
     use HasFactory;
     protected $dates = ['published_at'];
-    protected $fillable = ['title','url'];
+    protected $fillable = ['title','url','body','mediumtext','category_id','published_at','user_id'];
     
 
     public function getRouteKeyName()
@@ -39,6 +39,11 @@ class Post extends Model
         return $this->hasMany(Photo::class);
     }
 
+    public function owner()
+    {
+  return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function scopePublished($query)
     {
       $query->whereNotNull('published_at')
@@ -46,4 +51,10 @@ class Post extends Model
         ->latest('published_at');
     }
 
+    public function setPublishedAtAttribute($published_at)
+    {
+      $this->attributes['published_at'] = $published_at ? Carbon::parse($published_at) : null; 
+    }
+
+    
 }

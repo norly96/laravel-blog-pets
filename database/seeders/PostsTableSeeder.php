@@ -27,6 +27,7 @@ class PostsTableSeeder extends Seeder
         $post->body = "Contenido del primer post"; 
         $post->published_at = Carbon::now()->subDays(1);
         $post->category_id = 1;
+        $post->user_id = 1;
         $post->save();
 
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 1']));
@@ -38,6 +39,7 @@ class PostsTableSeeder extends Seeder
         $post->body = "Contenido del segundo post"; 
         $post->published_at = Carbon::now()->subDays(3);
         $post->category_id = 2;
+        $post->user_id = 1;
         $post->save();
 
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 2']));
@@ -49,8 +51,33 @@ class PostsTableSeeder extends Seeder
         $post->body = "Contenido del tercer post"; 
         $post->published_at = Carbon::now()->subDays(5);
         $post->category_id = 2;
+        $post->user_id = 1;
         $post->save();
         
         $post->tags()->attach(Tag::create(['name' => 'Etiqueta 3']));
+
+        $post = new Post();
+        $post->title = "Mi cuarto post";
+        $post->url = Str::slug("Mi cuarto post");
+        $post->mediumtext = "Extracto del cuarto post";
+        $post->body = "Contenido del cuarto post"; 
+        $post->published_at = Carbon::now()->subDays(3);
+        $post->category_id = 2;
+        $post->user_id = 2;
+        $post->save();
+
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 3']));
+
+        $post = new Post();
+        $post->title = "Mi quinto post";
+        $post->url = Str::slug("Mi quinto post");
+        $post->mediumtext = "Extracto del quinto post";
+        $post->body = "Contenido del quinto post"; 
+        $post->published_at = Carbon::now()->subDays(3);
+        $post->category_id = 1;
+        $post->user_id = 2;
+        $post->save();
+
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 2']));
     }
 }

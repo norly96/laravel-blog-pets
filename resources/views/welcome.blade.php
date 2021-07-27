@@ -140,21 +140,21 @@
                 <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
-                    @if ($post->photos->count()==1)
+                    @if ($post->photos->count())
                       <img src="{{$post->photos->first()->url}}" alt="">
-                      @elseif($post->photos->count()>1)
-                      <img src="{{$post->photos->first()->url}}" alt="">
+                      {{-- @elseif($post->photos->count()>1)
+                      <img src="{{$post->photos->first()->url}}" alt=""> --}}
                     @endif  
                     </div>
                     <div class="down-content">
                       <span>{{$post->title}}</span>
                       <a href="post-details.html"><h4>{{$post->mediumtext}}</h4></a>
                       <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
+                        <li><a href="#">{{$post->owner->name}}</a></li>
                         <li><a href="#">{{$post->published_at->format('M d Y')}}</a></li>
-                        <li><a href="#">{{$post->category->name}}</a></li>
+                        <li><a href="{{route('categories.show',$post->category)}}">{{$post->category->name}}</a></li>
                         @foreach($post->tags as $tag)
-                        <li><a href="#">#{{$tag->name}}</a></li>
+                        <li><a href="{{route('tags.show',$tag)}}">#{{$tag->name}}</a></li>
                         @endforeach
                       </ul>
                       <br/>
@@ -164,7 +164,8 @@
                           <div class="col-6">
                             <ul class="post-tags">
                               
-                             <li><a href="blog/{{$post->url}}">Leer mas</a></li>
+                             {{-- <li><a href="blog/{{$post->url}}">Leer mas</a></li> --}}
+                             <li><a href="{{route('posts.show',$post)}}">Leer mas</a></li>
                             </ul>
                           </div>
                           
@@ -246,7 +247,7 @@
                 </div> --}}
                 <div class="col-lg-12">
                   <div class="main-button">
-                    <a href="blog.html">View All Posts</a>
+                    <a href="{{route('lista')}}">View All Posts</a>
                   </div>
                 </div>
               </div>
@@ -288,27 +289,32 @@
                 <div class="col-lg-12">
                   <div class="sidebar-item categories">
                     <div class="sidebar-heading">
-                      <h2>Categories</h2>
+                      <h2>Categorias</h2>
                     </div>
                     <div class="content">
+                    @foreach($posts as $post)
                       <ul>
-                        <li><a href="#">-  Lifestyle</a></li>
-                        <li><a href="#">- Awesome Layouts</a></li>
-                        <li><a href="#">- Creative Ideas</a></li>
-                        <li><a href="#">- Responsive Templates</a></li>
-                        <li><a href="#">- HTML5 / CSS3 Templates</a></li>
-                        <li><a href="#">- Creative &amp; Unique</a></li>
-                      </ul>
-                    </div>
+                        <li><a href="{{route('categories.show', $post->category)}}">- Gatos</a></li>
+                        <li><a href="{{route('categories.show', $post->category)}}">- Perros</a></li>
+                      </ul>  
+                    @endforeach
+                      </div>
                   </div>
                 </div>
                 <div class="col-lg-12">
                   <div class="sidebar-item tags">
                     <div class="sidebar-heading">
-                      <h2>Tag Clouds</h2>
+                      <h2>Etiquetas</h2>
                     </div>
                     <div class="content">
-                      <ul>
+                    @foreach($posts as $post)
+                      <ul>                
+                        @foreach($post->tags as $tag)
+                        <li><a href="#">{{$tag->name}}</a></li>
+                        @endforeach
+                      </ul>  
+                    @endforeach
+                      {{-- <ul>
                         <li><a href="#">Lifestyle</a></li>
                         <li><a href="#">Creative</a></li>
                         <li><a href="#">HTML5</a></li>
@@ -316,7 +322,7 @@
                         <li><a href="#">Motivation</a></li>
                         <li><a href="#">PSD</a></li>
                         <li><a href="#">Responsive</a></li>
-                      </ul>
+                      </ul> --}}
                     </div>
                   </div>
                 </div>

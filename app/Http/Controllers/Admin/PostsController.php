@@ -14,7 +14,7 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::where('user_id', auth()->id())->get();
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -27,9 +27,13 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-          $this->validate($request, ['title'=>'required']);
+
+        $this->authorize('create', new Post);
+          $this->validate($request, ['title'=>'required|unique:posts']);
+
           $post = Post::create([
             'title'=>$request->get('title'),  
+            'user_id'=>auth()->id(), 
             'url'=>Str::slug($request->get('title')),
               /* 'url'=>Str::slug($request->get('title')), */
             ]);
@@ -39,10 +43,13 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
-        $categories = Category::all();
-        $tags = Tag::all();
-
-        return view('admin.posts.edit', compact('categories', 'tags','post') );
+        $this->authorize('view',$post);
+        
+        return view('admin.posts.edit', [
+           'post' => $post,
+           'tags' => Tag::all(),
+           'categories' => Category::all(),
+        ]); 
     
        
     }
@@ -50,29 +57,53 @@ class PostsController extends Controller
 
        public function update( Post $post, Request $request)
     {
-        $this->validate($request, [
+        $this->authorize('update',$post);
+
+        $this->validate($request,[
             'title' => 'required',
             'body'  => 'required',
             'mediumtext' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'tags' => 'required',
-            'published_at' => 'nullable'
+            'published_at' => 'required'
         ]);
-
-       
-        $post->title=$request->get('title');
+               
+       /*  $post->title=$request->get('title');
         $post->url=Str::slug($request->get('title'));
         $post->body=$request->get('body');
         $post->mediumtext=$request->get('mediumtext');
-        $post->published_at=Carbon::parse($request->get('published_at'));
+        $post->published_at= $request->get('published_at');
         $post->category_id=$request->get('category');
-        $post->save();
+        $post->save(); */
 
-        $post->tags()->sync($request->get('tags'));
+        $post->update($request->all());
 
-        return redirect()->route('admin.posts.edit',$post)->with('flash','Tu publicacion ha sido guardada');
+        
+        $tags = collect($request->get('tags'))->map(function($tag){
+            return Tag::find($tag) ? $tag :Tag::create(['name' => $tag])->id;
+        });
+
+        $post->tags()->sync($tags);
+
+        return redirect()->route('admin.posts.edit',$post)->with('flash','La publicacion ha sido guardada');
         
     } 
 
+    public function destroy(Post $post)
+
+
+    {
+        $this->authorize('delete',$post);
+
+        $post->tags()->detach();
+
+        $post->photos->each->delete();
+
+         $post->delete();
+
+         return redirect()
+           ->route('admin.posts.index')
+           ->with('flash', 'La publicacion ha sido eliminada');
+    }
     
 }
